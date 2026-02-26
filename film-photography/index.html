@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Photography — Kevin Weldon</title>
+
+    <!-- Fonts -->
+    <style>
+        @font-face {
+            font-family: 'Departure Mono';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Monument Grotesk Mono';
+            src: url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff2') format('woff2'),
+                 url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --color-dark-blue: rgb(28, 60, 245);
+            --color-medium-blue: rgb(61, 99, 241);
+            --color-light-blue: rgb(155, 171, 249);
+            --color-cream: rgb(251, 251, 251);
+            --color-black: rgb(0, 0, 0);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monument Grotesk Mono', monospace;
+            background-color: var(--color-cream);
+            color: var(--color-black);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .back-link {
+            font-size: 0.85rem;
+            color: var(--color-medium-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-dark-blue);
+        }
+
+        .page-title {
+            font-family: 'Departure Mono', monospace;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 400;
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-intro {
+            font-size: 0.95rem;
+            color: var(--color-black);
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0.7;
+        }
+
+        /* Divider */
+        .divider {
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-light-blue);
+            margin: 3rem auto;
+        }
+
+        /* Photo entries */
+        .photo-entry {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .photo-entry img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 1.5rem;
+            border: 1px solid var(--color-light-blue);
+        }
+
+        .photo-caption {
+            font-size: 0.9rem;
+            color: var(--color-black);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .photo-meta {
+            font-size: 0.75rem;
+            color: var(--color-medium-blue);
+            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-light-blue);
+            margin-top: 2rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <a href="../" class="back-link">← Kevin Weldon</a>
+            <h1 class="page-title">Film Photography</h1>
+            <p class="page-intro">
+                Moments on 35mm.
+            </p>
+        </header>
+
+        <div class="divider"></div>
+
+
+        <article class="photo-entry">
+            <img src="../film/film_01.jpeg" alt="Film photograph">
+            <p class="photo-caption">
+                Ridges seen from the Reintal on the way to summit Zugspitze, Germany, September '25.
+            </p>
+            <p class="photo-meta">35mm | Kodak Portra 400</p>
+        </article>
+
+        <p>
+            Ages ago in high school, I took a half-year course in photography and it was my first exposure to analog film. I remember crafting pinhole cameras from oatmeal canisters and splashing cyanotype paper into chemical baths in a dark room. Loads of fun. 
+            
+        </p>
+        <p>
+            <br>
+            There's something that feels more "real" when we compare analog art to digital art. Digital files seem to come from some vague point out in the ether, a series of electrons performing computations in matrices to approximate what we see and hear in the world. I think this is most clear in music: a Spotify file wired through headphones will offer a different listening experience compared to a vinyl record, pulled out from a sleeve and scratched over time, placed on a carousel where you can see it spinning and the vibrations produced from a sharp needle in front of your eyes. In photography, analogue film captures light at the moment you place your finger on a shutter. A permanent chemical reaction is triggered and the light bouncing from the Sun to the subject through your lens and onto a negative is kept there forever.
+        </p>
+        <p>
+            <br>
+            Anyway, that's just me waxing poetic on my love for analogue photography. At some point in my late teens, I found my dad's old Canon AE-1 in the basement and have used it with a stock lens ever since.
+            <br>
+            <br>
+        </p>
+
+        <article class="photo-entry">
+            <img src="../film/film_02.jpeg" alt="Film photograph">
+            <p class="photo-caption">
+                Achensee in Austria, captured from a mountain hike with friends in June '25.
+             </p>
+            <p class="photo-meta">35mm | Kodak Gold 200</p>
+        </article>
+
+        <p>
+            Film photography comes out better; there's just not much else I can say. And it's not necessarily the visual quality so much as the feeling captured by a grainy photo. I love the ritual of loading film, hitting the shutter once, and not knowing what I've captured until I pick up the scans from a film lab weeks later. 
+              </p>
+        <p>
+            <br>
+            For this reason (this ritual), I take my camera and rolls of film with me whenever I want to capture the important places and people in my life. Weddings, birthdays, trips with friends, snowy days, good meals, and journeys to the other side of the world have all been collected in my trusty 35mm camera.
+            <br>
+            <br>
+        </p>
+        <article class="photo-entry">
+            <img src="../film/film_03.jpeg" alt="Film photograph">
+            <p class="photo-caption">
+                Beneath the arch at Cathedral Cove in New Zealand, May '25. (Narnia fans will recognize this place.)
+            </p>
+            <p class="photo-meta">35mm | Kodak Gold 200</p>
+        </article>
+        <p>
+            I love tinkering with clunky old cameras and playing around with double exposures / new film stocks. There's no greater feeling than heading to a friend's place and seeing one of my months-old photos hung by a magnet on their fridge. It's mostly a solitary hobby, but I like to learn about it & meet fellow hobbyists & share it with people. I'm always down to chat if you have questions or want tips on getting started! :)
+            <br>
+            <br>
+        </p>
+
+        <article class="photo-entry">
+            <img src="../film/film_04.jpeg" alt="Film photograph">
+            <p class="photo-caption">
+                Berliner Dom, on a visit with friends in September '25.
+            </p>
+            <p class="photo-meta">35mm | CineStill 400 </p>
+        </article>
+
+        <footer>
+            <p>© 2026 Kevin Weldon</p>
+        </footer>
+
+    </div>
+</body>
+</html>
