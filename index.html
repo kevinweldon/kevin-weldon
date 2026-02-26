@@ -4,368 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kevin Weldon</title>
-    
-    <!-- Google Fonts - feel free to swap these -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-    
+
+    <!-- Fonts -->
     <style>
-        /* ===========================================
-           CSS VARIABLES - Edit these to customize!
-           =========================================== */
-        :root {
-            /* Colors */
-            --color-bg: #f8f6f3;
-            --color-text: #2c2c2c;
-            --color-text-muted: #6b6b6b;
-            --color-accent: #c45a3b;
-            --color-border: #e0dcd6;
-            
-            /* Typography */
-            --font-display: 'DM Serif Display', Georgia, serif;
-            --font-body: 'DM Sans', -apple-system, sans-serif;
-            
-            /* Spacing */
-            --space-unit: 1rem;
+        @font-face {
+            font-family: 'Departure Mono';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
         }
 
-        /* ===========================================
-           BASE STYLES
-           =========================================== */
+        @font-face {
+            font-family: 'Monument Grotesk Mono';
+            src: url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff2') format('woff2'),
+                 url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --color-dark-blue: rgb(28, 60, 245);
+            --color-medium-blue: rgb(61, 99, 241);
+            --color-light-blue: rgb(155, 171, 249);
+            --color-cream: rgb(251, 251, 251);
+            --color-black: rgb(0, 0, 0);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-body);
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
+            font-family: 'Monument Grotesk Mono', monospace;
+            background-color: var(--color-cream);
+            color: var(--color-black);
             min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
-        /* ===========================================
-           LAYOUT
-           =========================================== */
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: calc(var(--space-unit) * 4) calc(var(--space-unit) * 2);
-        }
-
-        /* ===========================================
-           HEADER / HERO
-           =========================================== */
-        header {
-            margin-bottom: calc(var(--space-unit) * 4);
-            padding-bottom: calc(var(--space-unit) * 3);
-            border-bottom: 1px solid var(--color-border);
+            padding: 4rem 3rem;
+            max-width: 800px;
         }
 
         .name {
-            font-family: var(--font-display);
+            font-family: 'Departure Mono', monospace;
             font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 400;
-            letter-spacing: -0.02em;
-            margin-bottom: calc(var(--space-unit) * 0.5);
+            color: var(--color-dark-blue);
+            margin-bottom: 1.5rem;
         }
 
-        .tagline {
+        .bio {
             font-size: 1.1rem;
-            color: var(--color-text-muted);
-            max-width: 500px;
-        }
-
-        /* ===========================================
-           NAVIGATION
-           =========================================== */
-        nav {
-            margin-top: calc(var(--space-unit) * 2);
-        }
-
-        nav a {
-            color: var(--color-text);
-            text-decoration: none;
-            margin-right: calc(var(--space-unit) * 1.5);
-            font-size: 0.95rem;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--color-accent);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* ===========================================
-           SECTIONS
-           =========================================== */
-        section {
-            margin-bottom: calc(var(--space-unit) * 4);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: calc(var(--space-unit) * 1.5);
-            color: var(--color-accent);
-        }
-
-        /* ===========================================
-           ABOUT
-           =========================================== */
-        .about-text {
-            font-size: 1.05rem;
-            max-width: 600px;
-            color: var(--color-text-muted);
-        }
-
-        /* ===========================================
-           EXPERIENCE / EDUCATION ITEMS
-           =========================================== */
-        .item {
-            margin-bottom: calc(var(--space-unit) * 2);
-            padding-bottom: calc(var(--space-unit) * 2);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .item:last-child {
-            border-bottom: none;
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .item-title {
-            font-weight: 500;
-            font-size: 1.05rem;
-        }
-
-        .item-date {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-        }
-
-        .item-subtitle {
-            font-size: 0.95rem;
-            color: var(--color-text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .item-description {
-            font-size: 0.95rem;
-            color: var(--color-text-muted);
-        }
-
-        /* ===========================================
-           PROJECTS
-           =========================================== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: calc(var(--space-unit) * 1.5);
-        }
-
-        .project-card {
-            background: white;
-            padding: calc(var(--space-unit) * 1.5);
-            border-radius: 4px;
-            border: 1px solid var(--color-border);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .project-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-card p {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-        }
-
-        /* ===========================================
-           CONTACT
-           =========================================== */
-        .contact-links {
-            display: flex;
-            gap: calc(var(--space-unit) * 1.5);
-            flex-wrap: wrap;
-        }
-
-        .contact-links a {
-            color: var(--color-text);
-            text-decoration: none;
-            font-size: 0.95rem;
-            padding-bottom: 2px;
-            border-bottom: 1px solid var(--color-border);
-            transition: border-color 0.2s ease;
-        }
-
-        .contact-links a:hover {
-            border-color: var(--color-accent);
-        }
-
-        /* ===========================================
-           FOOTER
-           =========================================== */
-        footer {
-            margin-top: calc(var(--space-unit) * 4);
-            padding-top: calc(var(--space-unit) * 2);
-            border-top: 1px solid var(--color-border);
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-        }
-
-        /* ===========================================
-           RESPONSIVE
-           =========================================== */
-        @media (max-width: 600px) {
-            .container {
-                padding: calc(var(--space-unit) * 2) calc(var(--space-unit) * 1.5);
-            }
-            
-            .item-header {
-                flex-direction: column;
-            }
+            line-height: 1.6;
+            max-width: 550px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        
-        <!-- HEADER -->
-        <header>
-            <h1 class="name">Kevin Weldon</h1>
-            <p class="tagline">Mechanical Engineer — structural simulation, design, and building things that work.</p>
-            
-            <nav>
-                <a href="#about">About</a>
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </header>
-
-        <!-- ABOUT -->
-        <section id="about">
-            <h2 class="section-title">About</h2>
-            <p class="about-text">
-                I love the world of built systems and what computers have made possible within it. 
-                Infrastructure, energy, transportation, and manufacturing have ever-updating tools that can help made the world feel modern again. 
-                We live in the 21st century! There's so much work to do.
-            </p>
-        </section>
-
-        <!-- EXPERIENCE -->
-        <section id="experience">
-            <h2 class="section-title">Experience</h2>
-            
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Mechanical Engineer II</span>
-                    <span class="item-date">2022 — Present</span>
-                </div>
-                <div class="item-subtitle">Westinghouse · Cranberry, PA, USA</div>
-                <p class="item-description">
-                    
-                </p>
-            </div>
-            
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Applications Engineer, Salesforce Systems Engineer</span>
-                    <span class="item-date">2019 — 2022</span>
-                </div>
-                <div class="item-subtitle">FS-Elliott · Export, PA, USA</div>
-                <p class="item-description">
-                    
-                </p>
-            </div>
-        </section>
-
-        <!-- EDUCATION -->
-        <section id="education">
-            <h2 class="section-title">Education</h2>
-            
-            <div class="item">
-                <div class="item-header">
-                    <span class="item-title">Bachelor's of Science in Mechanical Engineering</span>
-                    <span class="item-date">October 2015 - April 2019</span>
-                </div>
-                <div class="item-subtitle">University of Pittsburgh</div>
-            </div>
-
-
-            <div class="item">
-                  <div class="item-header">
-                      <span class="item-title">Master's of Science in Computational Mechanics</span>
-                      <span class="item-date">October 2023 - January 2026</span>
-                  </div>
-                  <div class="item-subtitle">Technische Universit&aumlt M&uumlnchen</div>
-              </div>
-          
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects">
-            <h2 class="section-title">Projects</h2>
-            
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Master's Thesis</h3>
-                    <p>Reducing Corner Singularities in Soil Models with the Wave Based Method and Special-Purpose Enrichment Functions</p>
-                </div>
-                
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-links">
-                <a href="mailto:kmfweldon@gmail.com">kmfweldon @ gmail.com</a>
-                <a href="https://linkedin.com/in/kevin-weldon" target="_blank">LinkedIn</a>
-                <a href="https://github.com/kevinweldon" target="_blank">GitHub</a>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer>
-            <p>© 2026 Kevin Weldon</p>
-        </footer>
-
+        <h1 class="name">Kevin Weldon</h1>
+        <p class="bio">
+            I'm a mechanical engineer based in Pittsburgh, Pennsylvania. Hobbyist of many things. You can reach me at kmfweldon @ gmail.com.
+        </p>
     </div>
 </body>
 </html>
