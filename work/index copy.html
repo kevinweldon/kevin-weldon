@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work — Kevin Weldon</title>
+
+    <style>
+        @font-face {
+            font-family: 'Departure Mono';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Monument Grotesk Mono';
+            src: url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff2') format('woff2'),
+                 url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --color-dark-blue: rgb(28, 60, 245);
+            --color-medium-blue: rgb(61, 99, 241);
+            --color-light-blue: rgb(155, 171, 249);
+            --color-cream: rgb(251, 251, 251);
+            --color-black: rgb(0, 0, 0);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monument Grotesk Mono', monospace;
+            background-color: var(--color-cream);
+            color: var(--color-black);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .back-link {
+            font-size: 0.85rem;
+            color: var(--color-medium-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-dark-blue);
+        }
+
+        .page-title {
+            font-family: 'Departure Mono', monospace;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 400;
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-intro {
+            font-size: 0.95rem;
+            color: var(--color-black);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.7;
+        }
+
+        /* Timeline container */
+        .timeline-wrapper {
+            margin-top: 3rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            min-width: 800px;
+        }
+
+        /* Year axis */
+        .year-axis {
+            display: flex;
+            border-bottom: 2px solid var(--color-light-blue);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .year-label {
+            flex: 1;
+            font-size: 0.75rem;
+            color: var(--color-medium-blue);
+            text-align: left;
+            font-family: 'Departure Mono', monospace;
+        }
+
+        /* Gantt rows */
+        .gantt-row {
+            position: relative;
+            height: 50px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0 0.75rem;
+            font-size: 0.7rem;
+            color: white;
+            transition: all 0.2s ease;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .gantt-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(28, 60, 245, 0.3);
+        }
+
+        .gantt-bar.active {
+            box-shadow: 0 4px 16px rgba(28, 60, 245, 0.4);
+        }
+
+        .gantt-bar.work {
+            background: linear-gradient(135deg, var(--color-dark-blue), var(--color-medium-blue));
+        }
+
+        .gantt-bar.research {
+            background: linear-gradient(135deg, var(--color-medium-blue), var(--color-light-blue));
+        }
+
+        .gantt-bar.education {
+            background: linear-gradient(135deg, var(--color-light-blue), #a8b8fc);
+            color: var(--color-dark-blue);
+        }
+
+        .bar-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* Description panel */
+        .description-panel {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border: 1px solid var(--color-light-blue);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .description-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .panel-title {
+            font-family: 'Departure Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--color-dark-blue);
+            font-weight: 400;
+        }
+
+        .panel-meta {
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+        }
+
+        .panel-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-medium-blue);
+            margin-bottom: 1rem;
+        }
+
+        .panel-description {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--color-black);
+            opacity: 0.85;
+        }
+
+        .panel-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--color-medium-blue);
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .panel-close:hover {
+            color: var(--color-dark-blue);
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--color-black);
+            opacity: 0.7;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        .legend-color.work {
+            background: linear-gradient(135deg, var(--color-dark-blue), var(--color-medium-blue));
+        }
+
+        .legend-color.research {
+            background: linear-gradient(135deg, var(--color-medium-blue), var(--color-light-blue));
+        }
+
+        .legend-color.education {
+            background: linear-gradient(135deg, var(--color-light-blue), #a8b8fc);
+        }
+
+        /* Instruction */
+        .instruction {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-light-blue);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .gantt-bar {
+                font-size: 0.6rem;
+                padding: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <a href="../" class="back-link">← Kevin Weldon</a>
+            <h1 class="page-title">Work</h1>
+            <p class="page-intro">
+                A timeline of where I've been and what I've worked on.
+            </p>
+        </header>
+
+        <div class="timeline-wrapper">
+            <div class="timeline">
+                <!-- Year axis: 2017 to 2026 -->
+                <div class="year-axis">
+                    <span class="year-label">2017</span>
+                    <span class="year-label">2018</span>
+                    <span class="year-label">2019</span>
+                    <span class="year-label">2020</span>
+                    <span class="year-label">2021</span>
+                    <span class="year-label">2022</span>
+                    <span class="year-label">2023</span>
+                    <span class="year-label">2024</span>
+                    <span class="year-label">2025</span>
+                    <span class="year-label">2026</span>
+                </div>
+
+                <!-- Gantt bars -->
+                <div class="gantt-row">
+                    <div class="gantt-bar work" data-id="westinghouse" style="left: 55.5%; width: 38%;">
+                        <span class="bar-label">Westinghouse — Mechanical Engineer II</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar education" data-id="tum" style="left: 67.5%; width: 26%;">
+                        <span class="bar-label">TUM — MSc Computational Mechanics</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar work" data-id="fselliott-sfdc" style="left: 52%; width: 3.5%;">
+                        <span class="bar-label">FS-Elliott</span>
+                    </div>
+                    <div class="gantt-bar work" data-id="fselliott-apps" style="left: 28%; width: 24%;">
+                        <span class="bar-label">FS-Elliott — Applications Engineer</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar research" data-id="robertson" style="left: 24%; width: 7%;">
+                        <span class="bar-label">Pitt — Robertson Lab</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar research" data-id="daad" style="left: 14%; width: 3.5%;">
+                        <span class="bar-label">DAAD</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar work" data-id="tesla" style="left: 10%; width: 3.5%;">
+                        <span class="bar-label">Tesla</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar research" data-id="vipperman" style="left: 8%; width: 2.5%;">
+                        <span class="bar-label">Pitt</span>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-bar work" data-id="kennametal" style="left: 6%; width: 2%;">
+                        <span class="bar-label">Kennametal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="instruction">Click on a bar to learn more</p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color work"></div>
+                <span>Industry</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color research"></div>
+                <span>Research</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color education"></div>
+                <span>Education</span>
+            </div>
+        </div>
+
+        <!-- Description Panel -->
+        <div class="description-panel" id="description-panel">
+            <div class="panel-header">
+                <div>
+                    <h2 class="panel-title" id="panel-title"></h2>
+                    <p class="panel-subtitle" id="panel-subtitle"></p>
+                </div>
+                <button class="panel-close" onclick="closePanel()">×</button>
+            </div>
+            <p class="panel-meta" id="panel-meta"></p>
+            <p class="panel-description" id="panel-description"></p>
+        </div>
+
+        <footer>
+            <p>© 2026 Kevin Weldon</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const experiences = {
+            'westinghouse': {
+                title: 'Mechanical Engineer II',
+                subtitle: 'Westinghouse Electric Company · Cranberry, PA',
+                dates: 'July 2022 — Present',
+                description: `At Westinghouse, I've worked across the lifecycle of nuclear power—from new plant construction to long-term asset management for operating reactors. I supported the startup and commissioning of new construction projects, spending time on-site performing mechanical inspections and writing ITAAC reports to satisfy NRC licensing requirements. During Hot Functional Testing, I led analysis of reactor hot piping system performance data to validate instrument accuracy and system behavior. I've also contributed to license renewal efforts, updating and verifying engineering calculations for primary systems at plants seeking extended operation. On the reliability side, I conducted a comprehensive study for an overseas client, evaluating critical reactor vessel components and delivering a risk assessment with recommendations for long-term asset management. I've developed preventive maintenance optimization studies that reduced labor hours while maintaining system reliability.`
+            },
+            'tum': {
+                title: 'MSc Computational Mechanics',
+                subtitle: 'Technische Universität München · Munich, Germany',
+                dates: 'October 2023 — Present',
+                description: `After a few years in industry, I returned to school to deepen my understanding of the numerical methods underlying engineering simulation. At TUM, I've studied continuum mechanics, nonlinear finite elements, computational plasticity, structural dynamics, and CFD alongside courses in machine learning and deep learning applied to mechanics. My thesis focuses on reducing corner singularities in soil models using the Wave-Based Method and special-purpose enrichment functions—work that sits at the intersection of numerical analysis and geotechnical engineering. Living in Munich has also meant improving my German and exploring Europe whenever I can.`
+            },
+            'fselliott-sfdc': {
+                title: 'Salesforce Systems Engineer',
+                subtitle: 'FS-Elliott · Export, PA',
+                dates: 'March 2022 — June 2022',
+                description: `In my final months at FS-Elliott, I transitioned into a Salesforce-focused role where I served as administrator and developer for the company's CRM platform. I managed automation projects that unified sales and service data across departments and built custom Apex and Lightning features to streamline quoting and customer tracking workflows. It was a short but intensive dive into enterprise software development.`
+            },
+            'fselliott-apps': {
+                title: 'Applications Engineer',
+                subtitle: 'FS-Elliott · Export, PA',
+                dates: 'October 2019 — March 2022',
+                description: `At FS-Elliott, I designed and quoted multi-million-dollar centrifugal compressor systems for clients in oil & gas, chemical processing, industrial manufacturing, and air separation. I worked directly with customers to understand their process requirements and translated those into aerodynamic component selections meeting specific flow and performance targets. I served as lead engineer on retrofit and upgrade projects, coordinating mechanical, electrical, and control system changes for installations around the world. This role taught me how to balance technical constraints with commercial realities and how to communicate complex engineering concepts to diverse stakeholders.`
+            },
+            'robertson': {
+                title: 'Research Assistant',
+                subtitle: 'Dr. Anne Robertson Lab · University of Pittsburgh',
+                dates: 'May 2019 — December 2019',
+                description: `After graduating, I stayed on at Pitt to work in Dr. Anne Robertson's biomechanics lab. I designed and fabricated a salt graft packing device prototype for coronary arterial bypass research, integrating an Arduino-based system for geometric sensing and iterative mechanical testing. The work combined CAD modeling, hands-on fabrication, and embedded systems programming.`
+            },
+            'daad': {
+                title: 'Research Intern (DAAD RISE)',
+                subtitle: 'Hochschule Kaiserslautern · Pirmasens, Germany',
+                dates: 'May 2018 — August 2018',
+                description: `Through the DAAD RISE scholarship program, I spent a summer at Hochschule Kaiserslautern in Germany working on sports equipment research. I developed and refined a tribometer test rig to analyze ski base friction behavior under freezing conditions, improving data accuracy and mechanical stability. On the side, I picked up composite repair and additive manufacturing techniques, including VARTM carbon fiber layups for motorbike components. This was my first extended time living abroad and sparked what would become a longer relationship with Germany.`
+            },
+            'tesla': {
+                title: 'Production Control Intern',
+                subtitle: 'Tesla · Fremont, CA',
+                dates: 'January 2018 — April 2018',
+                description: `I joined Tesla during the Model 3 production ramp-up—a chaotic and exhilarating time to be on the factory floor. I supported production by developing manual workarounds for in-progress automation systems and managing material flow constraints. I designed material handling fixtures and transport carts, issued RFQs, and built a vendor database ranking suppliers by cost, lead time, and communication quality. I performed quality control testing on newly installed automated conveyance systems, documenting issues and coordinating corrections with vendors. One project I'm particularly proud of: implementing inventory control systems for powered industrial equipment that reduced downtime and saved the company over $1M in operating costs.`
+            },
+            'vipperman': {
+                title: 'Research Assistant',
+                subtitle: 'Dr. Jeffrey Vipperman Lab · University of Pittsburgh',
+                dates: 'November 2017 — January 2018',
+                description: `My first research experience at Pitt was in Dr. Vipperman's lab, where I built and tested a friction measurement apparatus for material evaluation in a novel surgical retractor design. It was a short project but gave me my first taste of hands-on engineering research and prototype development.`
+            },
+            'kennametal': {
+                title: 'Engineering Intern',
+                subtitle: 'Kennametal · Latrobe, PA',
+                dates: 'July 2017 — August 2017',
+                description: `At Kennametal, I worked with their engineering team to model and revise machining components in Siemens NX. I updated tolerance schemes and design documentation for manufacturing release. It was my first experience with industrial CAD work and gave me insight into the precision required for cutting tool manufacturing.`
+            }
+        };
+
+        const panel = document.getElementById('description-panel');
+        const panelTitle = document.getElementById('panel-title');
+        const panelSubtitle = document.getElementById('panel-subtitle');
+        const panelMeta = document.getElementById('panel-meta');
+        const panelDescription = document.getElementById('panel-description');
+
+        let activeBar = null;
+
+        document.querySelectorAll('.gantt-bar').forEach(bar => {
+            bar.addEventListener('click', () => {
+                const id = bar.dataset.id;
+                const exp = experiences[id];
+
+                if (activeBar) {
+                    activeBar.classList.remove('active');
+                }
+                bar.classList.add('active');
+                activeBar = bar;
+
+                panelTitle.textContent = exp.title;
+                panelSubtitle.textContent = exp.subtitle;
+                panelMeta.textContent = exp.dates;
+                panelDescription.textContent = exp.description;
+
+                panel.classList.add('active');
+                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+
+        function closePanel() {
+            panel.classList.remove('active');
+            if (activeBar) {
+                activeBar.classList.remove('active');
+                activeBar = null;
+            }
+        }
+    </script>
+</body>
+</html>
