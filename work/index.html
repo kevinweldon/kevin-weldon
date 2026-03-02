@@ -137,19 +137,24 @@
         /* Swimlanes */
         .swimlane {
             position: relative;
-            height: 45px;
+            height: 70px;
             margin-bottom: 4px;
+        }
+
+        .swimlane.education-lane {
+            height: 45px;
         }
 
         .swimlane-label {
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: -2px;
             font-size: 0.55rem;
             color: var(--color-medium-blue);
             text-transform: uppercase;
             letter-spacing: 0.05em;
             width: 55px;
+            line-height: 1;
         }
 
         .swimlane-content {
@@ -239,6 +244,30 @@
         }
 
         .entry-label .dates {
+            font-size: 0.5rem;
+            color: var(--color-medium-blue);
+            display: block;
+        }
+
+        /* Labels below the bar (for alternating) */
+        .entry-label-below {
+            position: absolute;
+            top: calc(100% + 4px);
+            bottom: auto;
+            left: 0;
+            font-size: 0.55rem;
+            color: var(--color-black);
+            white-space: nowrap;
+            opacity: 0.85;
+            line-height: 1.2;
+        }
+
+        .entry-label-below .company {
+            font-weight: 500;
+            display: block;
+        }
+
+        .entry-label-below .dates {
             font-size: 0.5rem;
             color: var(--color-medium-blue);
             display: block;
@@ -350,6 +379,173 @@
             font-size: 0.75rem;
             color: var(--color-medium-blue);
         }
+
+        /* Mobile: Stacked mini-timelines */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .timeline-section {
+                overflow-x: visible;
+            }
+
+            .timeline-container {
+                min-width: unset;
+                padding-bottom: 0;
+            }
+
+            .timeline-container > br {
+                display: none;
+            }
+
+            /* Hide the shared axis and year markers on mobile */
+            .timeline-axis,
+            .year-markers {
+                display: none;
+            }
+
+            /* Each swimlane becomes its own mini-timeline */
+            .swimlane {
+                height: auto;
+                margin-bottom: 0rem;
+                padding-bottom: 0rem;
+            }
+
+            .swimlane:last-of-type {
+                margin-bottom: 1rem;
+            }
+
+            .swimlane-label {
+                position: relative;
+                bottom: auto;
+                width: auto;
+                font-size: 0.7rem;
+                font-weight: 500;
+                margin-bottom: 0.0rem;
+                display: block;
+            }
+
+            .swimlane-content {
+                position: relative;
+                left: 0;
+                right: 0;
+                top: auto;
+                bottom: auto;
+                height: 50px;
+                margin-bottom: 1.25rem;
+            }
+
+            /* Mini timeline axis for each swimlane */
+            .swimlane-content::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--color-light-blue);
+                z-index: 0;
+            }
+
+            .timeline-entry {
+                z-index: 1;
+            }
+
+            .entry-bar {
+                z-index: 1;
+            }
+
+            .timeline-entry {
+                /* Recalculate positions for full width */
+                /* Timeline spans 2015-2026 = 11 years */
+            }
+
+            .entry-label {
+                font-size: 0.5rem;
+            }
+
+            .entry-label .dates {
+                font-size: 0.45rem;
+            }
+
+            .entry-label .company,
+            .entry-label-below .company {
+                white-space: nowrap;
+            }
+
+            .entry-label-below {
+                font-size: 0.5rem;
+            }
+
+            .entry-label-below .dates {
+                font-size: 0.45rem;
+            }
+
+            /* Year markers per swimlane - commented out */
+
+            .swimlane[data-category="industry"]::after,
+            .swimlane[data-category="research"]::after,
+            .swimlane[data-category="education"]::after {
+                content: none;
+            }
+
+            .instruction {
+            text-align: center;
+                font-size: 0.75rem;
+                color: var(--color-medium-blue);
+                opacity: 0.7;
+                margin: 1.5rem 0;
+                margin-top: 10rem;
+            }
+
+            /* Mobile year ticks */
+            .mobile-years {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.45rem;
+                color: var(--color-medium-blue);
+                font-family: 'Departure Mono', monospace;
+                margin-top: 0.25rem;
+            }
+
+            .desktop-only {
+                display: none !important;
+            }
+
+            .mobile-only {
+                display: flex !important;
+            }
+
+            /* Adjust bar positions for mobile (full width) */
+            .timeline-entry {
+                height: 100%;
+            }
+
+            .entry-bar {
+                bottom: 0;
+            }
+
+            .description-panel {
+                padding: 1rem;
+            }
+
+            .panel-title {
+                font-size: 1rem;
+            }
+
+            .panel-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .panel-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        .mobile-only {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -384,10 +580,10 @@
                 <br><br>
                 <!-- Industry row (top) -->
                 <div class="swimlane">
-                    <div class="swimlane-label">Industry</div>
+                    <div class="swimlane-label" style="line-height: 150px;">Industry</div>
                     <div class="swimlane-content">
                         <!-- PennDOT: May 2016 - Aug 2016 -->
-                        <div class="timeline-entry" style="left: 11%; width: 2.5%;" data-id="penndot">
+                        <div class="timeline-entry" style="left: 13%; width: 3%;" data-id="penndot">
                             <div class="entry-label">
                                 <span class="company">PennDOT</span>
                                 <span class="dates">'16</span>
@@ -396,8 +592,8 @@
                         </div>
 
                         <!-- Kennametal: July 2017 - Aug 2017 -->
-                        <div class="timeline-entry" style="left: 20%; width: 1.5%;" data-id="kennametal">
-                            <div class="entry-label">
+                        <div class="timeline-entry" style="left: 23.5%; width: 1.5%;" data-id="kennametal">
+                            <div class="entry-label-below">
                                 <span class="company">Kennametal</span>
                                 <span class="dates">'17</span>
                             </div>
@@ -405,7 +601,7 @@
                         </div>
 
                         <!-- Tesla: Jan 2018 - April 2018 -->
-                        <div class="timeline-entry" style="left: 26.5%; width: 2.5%;" data-id="tesla">
+                        <div class="timeline-entry" style="left: 28%; width: 3%;" data-id="tesla">
                             <div class="entry-label">
                                 <span class="company">Tesla</span>
                                 <span class="dates">'18</span>
@@ -414,8 +610,8 @@
                         </div>
 
                         <!-- FS-Elliott Apps: Oct 2019 - March 2022 -->
-                        <div class="timeline-entry" style="left: 42%; width: 21%;" data-id="fselliott-apps">
-                            <div class="entry-label">
+                        <div class="timeline-entry" style="left: 44%; width: 22%;" data-id="fselliott-apps">
+                            <div class="entry-label-below">
                                 <span class="company">FS-Elliott</span>
                                 <span class="dates">2019–2022</span>
                             </div>
@@ -423,41 +619,44 @@
                         </div>
 
                         <!-- FS-Elliott SFDC: March 2022 - June 2022 -->
-                        <div class="timeline-entry" style="left: 63.5%; width: 2.5%;" data-id="fselliott-sfdc">
+                        <div class="timeline-entry" style="left: 66%; width: 3%;" data-id="fselliott-sfdc">
                             <div class="entry-label">
-                                <span class="company">FSE</span>
+                                <span class="company">FS-Elliott</span>
                                 <span class="dates">'22</span>
                             </div>
                             <div class="entry-bar work"></div>
                         </div>
 
                         <!-- Westinghouse: July 2022 - Present -->
-                        <div class="timeline-entry" style="left: 66.5%; width: 30%;" data-id="westinghouse">
-                            <div class="entry-label">
+                        <div class="timeline-entry" style="left: 69%; width: 28%;" data-id="westinghouse">
+                            <div class="entry-label-below">
                                 <span class="company">Westinghouse</span>
                                 <span class="dates">2022–Present</span>
                             </div>
                             <div class="entry-bar work"></div>
                         </div>
                     </div>
+                    <div class="mobile-years mobile-only">
+                        <span>2015</span><span>2026</span>
+                    </div>
                 </div>
 
                 <!-- Research row (middle) -->
                 <div class="swimlane">
-                    <div class="swimlane-label">Research</div>
+                    <div class="swimlane-label" style="line-height: 150px;">Research</div>
                     <div class="swimlane-content">
                         <!-- Vipperman: Nov 2017 - Jan 2018 -->
-                        <div class="timeline-entry" style="left: 24%; width: 2%;" data-id="vipperman">
+                        <div class="timeline-entry" style="left: 21%; width: 2.4%;" data-id="vipperman">
                             <div class="entry-label">
-                                <span class="company">Vipperman <br>Lab</span>
+                                <span class="company">Vipperman Lab</span>
                                 <span class="dates">'17–'18</span>
                             </div>
                             <div class="entry-bar research"></div>
                         </div>
 
                         <!-- DAAD: May 2018 - Aug 2018 -->
-                        <div class="timeline-entry" style="left: 30%; width: 2.5%;" data-id="daad">
-                            <div class="entry-label">
+                        <div class="timeline-entry" style="left: 26%; width: 3.1%;" data-id="daad">
+                            <div class="entry-label-below">
                                 <span class="company">DAAD RISE</span>
                                 <span class="dates">'18</span>
                             </div>
@@ -465,22 +664,25 @@
                         </div>
 
                         <!-- Robertson: May 2019 - Dec 2019 -->
-                        <div class="timeline-entry" style="left: 37.5%; width: 5.5%;" data-id="robertson">
+                        <div class="timeline-entry" style="left: 35.4%; width: 6.3%;" data-id="robertson">
                             <div class="entry-label">
-                                <span class="company">Robertson <br>Lab</span>
+                                <span class="company">Robertson Lab</span>
                                 <span class="dates">'19</span>
                             </div>
                             <div class="entry-bar research"></div>
                         </div>
                     </div>
+                    <div class="mobile-years mobile-only">
+                        <span>2015</span><span>2026</span>
+                    </div>
                 </div>
 
                 <!-- Education row (bottom) -->
-                <div class="swimlane">
-                    <div class="swimlane-label">Education</div>
+                <div class="swimlane education-lane">
+                    <div class="swimlane-label" style="line-height: 100px;">Education</div>
                     <div class="swimlane-content">
                         <!-- Pitt: Aug 2015 - May 2019 -->
-                        <div class="timeline-entry" style="left: 7%; width: 33%;" data-id="pitt">
+                        <div class="timeline-entry" style="left: 2%; width: 35.4%;" data-id="pitt">
                             <div class="entry-label">
                                 <span class="company">University of Pittsburgh</span>
                                 <span class="dates">2015–2019</span>
@@ -488,8 +690,8 @@
                             <div class="entry-bar education"></div>
                         </div>
 
-                        <!-- TUM: Oct 2023 - Present -->
-                        <div class="timeline-entry" style="left: 77%; width: 20%;" data-id="tum">
+                        <!-- TUM: Oct 2023 - Jan 2026 -->
+                        <div class="timeline-entry" style="left: 77%; width: 22%;" data-id="tum">
                             <div class="entry-label">
                                 <span class="company">Technische Universität München</span>
                                 <span class="dates">2023–2026</span>
@@ -497,13 +699,16 @@
                             <div class="entry-bar education"></div>
                         </div>
                     </div>
+                    <div class="mobile-years mobile-only">
+                        <span>2015</span><span>2026</span>
+                    </div>
                 </div>
 
-                <!-- Timeline axis at bottom -->
-                <div class="timeline-axis"></div>
+                <!-- Timeline axis at bottom (desktop only) -->
+                <div class="timeline-axis desktop-only"></div>
 
-                <!-- Year markers -->
-                <div class="year-markers">
+                <!-- Year markers (desktop only) -->
+                <div class="year-markers desktop-only">
                     <span class="year-marker">2015</span>
                     <span class="year-marker">2016</span>
                     <span class="year-marker">2017</span>
