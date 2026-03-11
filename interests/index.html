@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interests — Kevin Weldon</title>
+
+    <style>
+        @font-face {
+            font-family: 'Departure Mono';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Monument Grotesk Mono';
+            src: url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff2') format('woff2'),
+                 url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --color-dark-blue: rgb(28, 60, 245);
+            --color-medium-blue: rgb(61, 99, 241);
+            --color-light-blue: rgb(155, 171, 249);
+            --color-cream: rgb(251, 251, 251);
+            --color-black: rgb(0, 0, 0);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monument Grotesk Mono', monospace;
+            background-color: var(--color-cream);
+            color: var(--color-black);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .back-link {
+            font-size: 0.85rem;
+            color: var(--color-medium-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-dark-blue);
+        }
+
+        .page-title {
+            font-family: 'Departure Mono', monospace;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 400;
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-intro {
+            font-size: 0.95rem;
+            color: var(--color-black);
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0.7;
+        }
+
+        /* Divider */
+        .divider {
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-light-blue);
+            margin: 2.5rem auto;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid var(--color-light-blue);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Departure Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--color-light-blue);
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .tab-btn:hover {
+            color: var(--color-medium-blue);
+        }
+
+        .tab-btn.active {
+            color: var(--color-dark-blue);
+            border-bottom-color: var(--color-dark-blue);
+        }
+
+        /* Tab panels */
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Item list */
+        .item-list {
+            list-style: none;
+        }
+
+        .item {
+            border-bottom: 1px solid var(--color-light-blue);
+        }
+
+        .item:first-child {
+            border-top: 1px solid var(--color-light-blue);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 1rem 0;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.15s ease;
+            gap: 1rem;
+        }
+
+        .item-header:hover .item-name {
+            color: var(--color-dark-blue);
+        }
+
+        .item-name {
+            font-size: 1rem;
+            color: var(--color-black);
+            transition: color 0.15s ease;
+        }
+
+        .item-meta {
+            font-size: 0.78rem;
+            color: var(--color-medium-blue);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .item-toggle {
+            font-family: 'Departure Mono', monospace;
+            font-size: 1rem;
+            color: var(--color-light-blue);
+            flex-shrink: 0;
+            transition: transform 0.25s ease, color 0.15s ease;
+            display: inline-block;
+        }
+
+        .item.open .item-toggle {
+            transform: rotate(45deg);
+            color: var(--color-dark-blue);
+        }
+
+        .item-body {
+            display: none;
+            padding-bottom: 1.2rem;
+            font-size: 0.9rem;
+            color: var(--color-black);
+            opacity: 0.8;
+            max-width: 540px;
+            line-height: 1.7;
+        }
+
+        .item.open .item-body {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-light-blue);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <a href="../" class="back-link">← Kevin Weldon</a>
+            <h1 class="page-title">Interests</h1>
+            <p class="page-intro">A few things I care about. Click any item to read more.</p>
+        </header>
+
+        <div class="divider"></div>
+
+        <nav class="tabs" role="tablist">
+            <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('hobbies', this)">Hobbies</button>
+            <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('books', this)">Books</button>
+            <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('albums', this)">Albums</button>
+        </nav>
+
+        <!-- Hobbies -->
+        <div class="tab-panel active" id="tab-hobbies">
+            <ul class="item-list">
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Film Photography</span>
+                        <span class="item-meta">Canon AE-1</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        I shoot on a Canon AE-1 that I found in my dad's basement. There's something irreplaceable about the ritual — loading a roll, committing to each frame, then waiting weeks to see what you captured. My film photography page goes deeper on this.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Running</span>
+                        <span class="item-meta">Pittsburgh trails</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Running clears my head in a way nothing else does. I mostly run trails and roads around Pittsburgh. Frick Park is a favorite. I track everything on Strava and love having a log of where I've been.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Tinkering & Making</span>
+                        <span class="item-meta">mechanical</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Being a mechanical engineer by day means I can't always turn off the urge to fix, build, or improve things. I like taking apart old gear, understanding how things are put together, and occasionally making something new from scratch.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Travel</span>
+                        <span class="item-meta">with a camera</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        I try to bring my camera everywhere. Recent highlights: summiting the Zugspitze in Germany, hiking the Cathedral Cove in New Zealand, a lake in Austria. The goal is to collect places, not just visit them.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Cooking</span>
+                        <span class="item-meta">weeknight experiments</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Cooking is one of those hobbies where the feedback loop is immediate and delicious. I like trying to recreate things I've eaten while traveling, and I'm slowly getting better at not burning things.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Books -->
+        <div class="tab-panel" id="tab-books">
+            <ul class="item-list">
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Zen and the Art of Motorcycle Maintenance</span>
+                        <span class="item-meta">Robert Pirsig</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        The book that made me think seriously about the relationship between technology and the people who use it. Pirsig's idea of Quality — something you can't fully define but immediately recognize — stuck with me. Required reading if you make things for a living.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">The Road</span>
+                        <span class="item-meta">Cormac McCarthy</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Bleak, beautiful, and impossible to put down. McCarthy strips language down to almost nothing and it somehow becomes more powerful for it. I read it in one sitting and felt wrecked afterward in the best way.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">A Gentleman in Moscow</span>
+                        <span class="item-meta">Amor Towles</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        One of the most purely enjoyable novels I've read. Count Rostov is under house arrest in a Moscow hotel for decades, and somehow Towles makes it feel like an adventure. A reminder that a rich inner life can survive almost any constraint.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">The Pragmatic Programmer</span>
+                        <span class="item-meta">Thomas & Hunt</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        The engineering mindset translated into software, and a lot of it applies back to physical engineering too. The idea of being a craftsperson — caring about your tools and your work — resonated with me immediately.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Endurance</span>
+                        <span class="item-meta">Alfred Lansing</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Shackleton's failed Antarctic expedition, told with documentary precision. Twenty-seven men survive two years trapped in the ice through sheer collective willpower. I've never felt cold reading a book before.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Albums -->
+        <div class="tab-panel" id="tab-albums">
+            <ul class="item-list">
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Illinois</span>
+                        <span class="item-meta">Sufjan Stevens · 2005</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        One of those albums I return to every year and find something new in it. Stevens stuffed this record with orchestral maximalism and raw grief simultaneously, and it somehow works. "Casimir Pulaski Day" is devastating.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">In Rainbows</span>
+                        <span class="item-meta">Radiohead · 2007</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        The warmest Radiohead record — which isn't saying much, but it's genuinely beautiful. "Reckoner" and "Videotape" are perfect. I go back to this constantly while running or on long flights.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Either/Or</span>
+                        <span class="item-meta">Elliott Smith · 1997</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        Recorded almost entirely alone on a four-track in his apartment. Every song feels like something overheard rather than performed. The lo-fi production is part of it — it couldn't exist any other way.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Funeral</span>
+                        <span class="item-meta">Arcade Fire · 2004</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        A debut record that felt like it arrived fully-formed. Big, anthemic, earnest in a way that could have been embarrassing but never is. "Neighborhood #1 (Tunnels)" is one of the greatest album openers ever made.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Blue</span>
+                        <span class="item-meta">Joni Mitchell · 1971</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        As exposed and vulnerable as a record gets. Mitchell said she was "wide open" when she made it, and you can hear it. Something about the open guitar tunings and her voice makes it feel like a private journal you're not supposed to be reading.
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="item-header" onclick="toggleItem(this)">
+                        <span class="item-name">Carrie & Lowell</span>
+                        <span class="item-meta">Sufjan Stevens · 2015</span>
+                        <span class="item-toggle">+</span>
+                    </div>
+                    <div class="item-body">
+                        The opposite of Illinois in scale — just fingerpicked guitar, hushed vocals, grief. Made after his mother died. It's one of those records that's difficult to listen to but impossible not to return to.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2026 Kevin Weldon</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function switchTab(name, btn) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            document.getElementById('tab-' + name).classList.add('active');
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+        }
+
+        function toggleItem(header) {
+            const item = header.parentElement;
+            item.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
