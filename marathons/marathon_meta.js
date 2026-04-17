@@ -32,8 +32,8 @@ var MARATHON_META = [
         location:    "Chicago, IL",
         years:       ["2022"],
         bestTime:    "3:XX:XX",
-        gain:        "—",
-        description: "[Your description here]",
+        gain:        "243ft",
+        description: "The Chicago Marathon was such a treat. Of all my races, it's the one I want to repeat the most. The course is flat and slick and the place I hit my PR (first and only NYC qualifier!) in perfect October weather, on a sunny Sunday morning along the Lake Michigan lakefront, with my brother and parents in the crowd. Afterwards, I squeezed in deep dish pizza and a visit to the Art Institute of Chicago before the roadtrip home. <br><br>To me, the Chicago Marathon is the gold standard for a well-run event with energetic crowds and great atmosphere.",
     },
     {
         id:          "boston",
@@ -41,8 +41,8 @@ var MARATHON_META = [
         location:    "Boston, MA",
         years:       ["2023"],
         bestTime:    "3:XX:XX",
-        gain:        "—",
-        description: "[Your description here]",
+        gain:        "906ft",
+        description: "What is there to say about the Boston Marathon? There's nothing else like it. It's the dream for any distance runner to qualify and join the starting line in Hopkinton. <br><br>I was lucky enough to race in 2023, and it's one of those experience that makes you feel like you 'made it' as a runner. Not my fastest time (there were downpours at the end and I was fully waterlogged at the finish), but I was there for the joy of it all. <br><br>Early in the morning, you ship out in a bus from Boston Common for the point-to-point course's starting line. It's a community event - you meet other runners from all over the world and fight for port-a-johns in a muddy high school field before walking a half mile to begin the race. <br><br>The course itself runs through quiet roads and opens up to louder and louder crowds (Wellesly particularly!), climbs up a couple brutal hills, and finishes in the Back Bay neighborhood.",
     },
     {
         id:          "salzburg",
@@ -50,8 +50,8 @@ var MARATHON_META = [
         location:    "Salzburg, Austria",
         years:       ["2024"],
         bestTime:    "3:XX:XX",
-        gain:        "—",
-        description: "[Your description here]",
+        gain:        "194ft",
+        description: "Salzburg is a beautiful city and just a short train ride from Munich, where I was living during the year that I ran this marathon. I signed up for this race with a friend who was running 26.2 for the very first time, and training was limited to about 4-5 weeks total. <br><br>The race event was relatively small and the crowd of runners was one of the smallest I'd been a part of. The course is relatively flat and covers two loops that weave around the old city, through tree-lined country roads, and past the lake house from the Sound of Music. Beautiful way to spend a weekend!",
     },
     {
         id:          "rotorua",
