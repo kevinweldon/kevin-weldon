@@ -6,7 +6,7 @@ var MARATHON_META = [
         years:       ["2018", "2019"],
         bestTime:    "2:53:53",
         gain:        "933ft",
-        description: "My first marathon! My home city! A beautiful way to first tackle 26.2 miles. <br><br>Of all the races I've ever run, I still think this course is the most exciting - there is almost no 'dead' area, the crowds are energetic the whole way, and the route makes you appreciate the character of all the Pittsburgh neighborhoods.<br><br>I didn't know how to train for a marathon in 2018 (other than 'run a lot'), so my first-ever marathon time of 3:09:46 wasn't too bad! A year later, I worked out a better training strategy and got a BQ.",
+        description: "My first marathon! My home city! A beautiful event to tackle my first 26.2 miles. <br><br>Of all the races I've ever run, I still think this course is the most exciting - there is almost no 'dead' area, the crowds are energetic the whole way, and the route makes you appreciate the character of all the Pittsburgh neighborhoods.<br><br>I didn't know how to train for a marathon in 2018 (other than 'run a lot'), so my first-ever marathon time of 3:09:46 wasn't too bad! A year later, I worked out a better training strategy and got a BQ.",
     },
     {
         id:          "philadelphia",
