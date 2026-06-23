@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Heatmap — Kevin Weldon</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Departure Mono';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+            font-weight: normal; font-display: swap;
+        }
+        @font-face {
+            font-family: 'Monument Grotesk Mono';
+            src: url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff2') format('woff2'),
+                 url('https://fontshub.pro/f-files/5f074ee71423d4061dbf0727/files/MonumentGrotesk-Mono.woff') format('woff');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        :root {
+            --color-dark-blue:   rgb(28, 60, 245);
+            --color-medium-blue: rgb(61, 99, 241);
+            --color-light-blue:  rgb(155, 171, 249);
+            --color-cream:       rgb(251, 251, 251);
+            --color-black:       rgb(0, 0, 0);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Monument Grotesk Mono', monospace;
+            background-color: var(--color-cream);
+            color: var(--color-black);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem;
+        }
+
+        header { text-align: center; margin-bottom: 2.5rem; }
+
+        .back-link {
+            font-size: 0.85rem;
+            color: var(--color-medium-blue);
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--color-dark-blue); }
+
+        .page-title {
+            font-family: 'Departure Mono', monospace;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 400;
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        .page-intro {
+            font-size: 0.95rem;
+            color: var(--color-black);
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0.7;
+        }
+
+        .divider {
+            width: 40px;
+            height: 2px;
+            background-color: var(--color-light-blue);
+            margin: 2.5rem auto;
+        }
+
+        .map-frame {
+            border: 1px solid var(--color-light-blue);
+            height: 75vh;
+            min-height: 420px;
+        }
+
+        #heatmap { width: 100%; height: 100%; background: var(--color-cream); }
+
+        .leaflet-control-zoom a {
+            background-color: var(--color-cream) !important;
+            color: var(--color-medium-blue) !important;
+            border-color: var(--color-light-blue) !important;
+        }
+        .leaflet-control-zoom a:hover {
+            background-color: var(--color-light-blue) !important;
+            color: var(--color-cream) !important;
+        }
+        .leaflet-control-attribution {
+            background-color: rgba(251, 251, 251, 0.85) !important;
+            color: var(--color-medium-blue) !important;
+            font-family: 'Monument Grotesk Mono', monospace;
+            font-size: 0.65rem;
+        }
+        .leaflet-control-attribution a { color: var(--color-dark-blue) !important; }
+
+        .map-caption {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--color-medium-blue);
+            margin-top: 1rem;
+            opacity: 0.85;
+        }
+
+        /* ── Intro section ── */
+        .intro-section {
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--color-black);
+            opacity: 0.75;
+            line-height: 1.7;
+        }
+        .intro-section ul, .intro-section ol {
+            padding-left: 1.4em;
+            margin: 0.5em 0;
+        }
+        .intro-section li {
+            margin-bottom: 0.25em;
+            padding-left: 0.4em;
+            color: var(--color-black);
+        }
+        .intro-section li::marker {
+            color: var(--color-medium-blue);
+        }
+        .intro-section a {
+            color: var(--color-dark-blue);
+            text-decoration: underline;
+        }
+        .intro-section a:hover {
+            color: var(--color-medium-blue);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-light-blue);
+            margin-top: 3rem;
+        }
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-medium-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="./" class="back-link">← Marathons</a>
+            <h1 class="page-title">Global Heatmap</h1>
+            <p class="page-intro">Every run I've logged on Strava! &lpar;As of June 2025&rpar;</p>
+        </header>
+
+        <div class="divider"></div>
+
+        <div class="map-frame">
+            <div id="heatmap"></div>
+        </div>
+        <p class="map-caption" id="route-count"></p>
+
+        <div class="intro-section">
+            <p>
+                Strava has a pretty cool feature for personal heatmaps, which I wanted to share here using all the gpx data from my account. This map uses data from July 2017 &lpar;when I joined Strava&rpar; to June 2025 &lpar;when I downloaded my data&rpar;.
+                <br>
+                <br>
+                Some cool places to zoom in on:
+            </p>
+            <ul>
+                <li>Pittsburgh, where I've been snaking through every street since undergrad.</li>
+                <li>Edinburgh, Scotland - my northernmost run.</li>
+                <li>Queenstown, New Zealand - my southernmost run.</li>
+                <li>Munich, my grad school days. I set out at some point to run every street in the city and barely scratched the surface...</li>
+                <li>Frisco, Colorado - my &lpar;surely?&rpar; highest altitude run.</li>
+                <li>Paris: I have a habit of arriving in a new city and trying to knock out all the tourist attractions in a single morning run. Great way to explore!</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2026 Kevin Weldon &amp; Claude</p>
+        </footer>
+    </div>
+
+    <script src="heatmap_routes.js"></script>
+    <script>
+        var map = L.map('heatmap', { zoomControl: true, attributionControl: true });
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }).addTo(map);
+
+        var allLats = [], allLngs = [];
+        HEATMAP_ROUTES.forEach(function(route) {
+            L.polyline(route, { color: 'rgb(28,60,245)', weight: 1.5, opacity: 0.6 }).addTo(map);
+            route.forEach(function(p) { allLats.push(p[0]); allLngs.push(p[1]); });
+        });
+
+        if (allLats.length) {
+            map.fitBounds([
+                [Math.min.apply(null, allLats), Math.min.apply(null, allLngs)],
+                [Math.max.apply(null, allLats), Math.max.apply(null, allLngs)]
+            ], { padding: [20, 20] });
+        } else {
+            map.setView([20, 0], 2);
+        }
+
+        document.getElementById('route-count').textContent = HEATMAP_ROUTES.length + ' runs mapped';
+    </script>
+</body>
+</html>
